@@ -39,7 +39,6 @@ angular.module('hs.irc')
 
         // Insert new state
         angular.extend(service.state, state);
-        console.log('state', state);
 
         // Allow actions and trigger transition
         $rootScope.allowAction = true;

@@ -8,6 +8,8 @@ var sourcemaps = require('gulp-sourcemaps');
 var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
 var gulpIf = require('gulp-if');
+var mainBowerFiles = require('main-bower-files');
+var gulpFilter = require('gulp-filter')
 
 var build = function (production) {
 
@@ -77,20 +79,64 @@ var build = function (production) {
 
   // BUNDLE VENDORS
 
-  var start = Date.now();
-  gulp.src([
-    './bower_components/angular/angular.js', 
-    './bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-    './bower_components/angular-ui-router/release/angular-ui-router.js',
-    './bower_components/angular-translate/angular-translate.js',
-    './bower_components/eventemitter2/lib/eventemitter2.js'
-    ])
-  .on('error', gutil.log)  
-  .pipe(concat('vendors.js'))
-  .pipe(gulp.dest(production ? './dist' : './build/'))
-  .pipe(notify(function () {
-    console.log('built VENDORS in ' + (Date.now() - start) + 'ms');
-  }));
+  var bundleVendorJS = function() {
+    var start = Date.now();
+
+    // Filter in javscrip but ignore Bootstrap and JQuery since we use angular-bootstrap.
+    // Remove jquery exclusion if jquery is wanted
+    var jsFilter = gulpFilter(['**/*.js', '!bootstrap.js', '!jquery.js'])
+
+    // BUNDLE VENDOR.JS
+
+    gulp.src(mainBowerFiles())
+      .pipe(jsFilter)
+      .pipe(sourcemaps.init())
+      .pipe(concat('vendors.js'))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('build'))
+      .pipe(notify(function () {
+        console.log('Built VENDOR.JS in ' + (Date.now() - start) + 'ms');
+      }));
+  };
+
+  var bundleVendorCSS = function() {
+    var start = Date.now();
+
+    // BUNDLE VENDOR.CSS
+
+    var files = mainBowerFiles();
+
+    // We also want the bootstrap theme so it look nices on touch devices.
+    // Need to add manually since it's not declared in the main section of Bootstrap
+    files.push('./bower_components/bootstrap/dist/css/bootstrap-theme.css')
+
+
+    gulp.src(files)
+      .pipe(gulpFilter(['**/*.css']))
+      .pipe(concat('vendors.css'))
+      .pipe(gulp.dest(production ? './dist' : './build/'))
+      .pipe(notify(function () {
+        console.log('Built VENDOR.CSS in ' + (Date.now() - start) + 'ms');
+      }));
+  };
+
+  var bundleVendorFonts = function() {
+    var start = Date.now();
+
+    // BUNDLE VENDOR FONTS
+
+    gulp.src(mainBowerFiles())
+      .pipe(gulpFilter(['**/*.eot', '**/*.svg', '**/*.ttf', '**/*.woff']))
+      .pipe(gulp.dest(production ? './dist/fonts' : './build/fonts'))
+      .pipe(notify(function () {
+        console.log('Bundled VENDOR fonts in ' + (Date.now() - start) + 'ms');
+      }));
+  };
+
+
+  bundleVendorJS();
+  bundleVendorCSS();
+  bundleVendorFonts();
 
   // Copy assets
   gulp.src(['./assets/**/*.*'], { base: './assets' })
