@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "proxy": "./node_modules/nodemon/bin/nodemon.js server.js proxy",
+    "dev": "./node_modules/nodemon/bin/nodemon.js server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,7 +19,8 @@
     "gulp": "^3.8.11",
     "gulp-if": "^1.2.5",
     "gulp-uglify": "^1.1.0",
-    "gulp-util": "^3.0.1"
+    "gulp-util": "^3.0.1",
+    "nodemon": "^1.3.7"
   },
   "dependencies": {
     "body-parser": "^1.10.0",

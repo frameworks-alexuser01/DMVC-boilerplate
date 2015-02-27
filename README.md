@@ -6,12 +6,13 @@
 - Download the Chrome LiveReload plugin
 
 ### Development
-1. `node server`
+1. `npm run dev`
 2. Go to local IP, not localhost, e.g. http://10.0.0.1:3000
+3. Changes to `state.json` will automatically restart node
 
 ### Proxy to backend
 1. Configure IP to backend in `config.json`
-2. `node server proxy`
+2. `npm run proxy`
 3. Go to local IP, not localhost, e.g. http://10.0.0.1:3000
 
 ### Build for production
@@ -48,6 +49,14 @@ The global **allowAction** state is used to identify when it is actually allowed
 });
 ```
 
+### Adding state
+You grab state from server in any template by default using:
+```html
+<button>{{state.foo}}</button>
+```
+To change the state delivered you can go into `server/controller.js` and change the
+default state object. This will restart the server and you will instantly see the change.
+
 ### FAQ
 
 #### What websocket port is used?
@@ -55,3 +64,9 @@ It is hard coded to 23112
 
 #### Where is the index.html file?
 You can find it in the `assets/` folder. It is copied into build and dist respectively
+
+#### How to get home screen icons?
+Put image files into assets folder and reference them in the `index.html` file in the assets folder
+
+#### The server does not deliver the app
+Remember to install npm and bower deps. Also remember to run `gulp` before running the server the first time

@@ -4,6 +4,14 @@ var cookie = require('cookie');
 var sessions = {};
 
 /*
+ * Changing default state restarts server and updates
+ * client app automatically
+ */
+var defaultState = {
+  uiState: 'app.welcome'
+};
+
+/*
  * Sends updates to all listening clients
  */
 var sendUpdate = function (session) {
@@ -21,17 +29,13 @@ var sendUpdate = function (session) {
  * handle
  */
 var createInitialState = function (data) {
-  return {
-    uiState: 'app.welcome'
-  };
+  return defaultState;
 };
 
 module.exports = {
 
   // Adds a new websocket session
   addSession: function (socket) {
-
-    console.log('Wuuut?');
 
     var headerCookie = socket.upgradeReq.headers.cookie;
     var cookies = cookie.parse(headerCookie);

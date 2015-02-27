@@ -39,6 +39,7 @@ angular.module('hs.irc')
 
         // Insert new state
         angular.extend(service.state, state);
+        console.log('state', state);
 
         // Allow actions and trigger transition
         $rootScope.allowAction = true;
@@ -63,7 +64,7 @@ angular.module('hs.irc')
         }, 100);
         setTimeout(function () {
           WebsocketService.connect(connectionOptions);
-        }, 2000);
+        }, 100);
       });
 
       // Do the initial connect
