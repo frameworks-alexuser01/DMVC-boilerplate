@@ -1,0 +1,36 @@
+<div class="navbar navbar-default navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand"><span style="font-size: 1.6em;" class="glyphicon glyphicon-inbox"></span></a>
+      <h4 class="navbar-text">
+              <span ng-class="{'label': true, 'label-warning': connection.text == 'Connecting', 'label-danger': connection.text == 'Offline', 'label-success': connection.text == 'Online'}">{{connection.text}}</span>
+            </h4>
+             <p class="navbar-text"><small>&nbsp; {{mode}}</small></p>
+    </div>
+  
+   <ul class="nav navbar-nav navbar-right">
+    <li class="dropdown">
+      <a class="dropdown-toggle">{{ 'SETTINGS' | translate}} <span class="caret"></span></a>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><a touch-start="changeLanguage($event, 'en')">{{ 'LANGUAGE.ENGLISH' | translate }}</a>
+        </li>
+        <li><a touch-start="changeLanguage($event, 'no')">{{ 'LANGUAGE.NORWEGIAN' | translate }}</a>
+        </li>
+        <li role="presentation" class="divider"></li>
+        <li><a touch-start="logout($event, 'no')">{{ 'LOGOUT' | translate }}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  </div>
+</div>
+
+<div ng-class="{'container-fluid': true, 'focus-reset': focusReset, 'app-page-container': true, 'modal-reset': modalReset}">
+  <ui-view></ui-view>
+</div>
+
+<div class="alert alert-danger alert-dismissible" role="alert" ng-show="state.error">
+  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+  </button>
+  <strong>Warning!</strong> {{state.error}}
+</div>

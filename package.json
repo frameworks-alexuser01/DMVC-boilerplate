@@ -1,0 +1,39 @@
+{
+  "name": "irc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://christianalfoni@bitbucket.org/hsnews/irc.git"
+  },
+  "author": "HSNews",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "gulp": "^3.8.11",
+    "gulp-if": "^1.2.5",
+    "gulp-uglify": "^1.1.0",
+    "gulp-util": "^3.0.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.10.0",
+    "cookie": "^0.1.2",
+    "cookie-parser": "^1.3.3",
+    "es6-promise": "^2.0.0",
+    "express": "^4.10.1",
+    "gulp-angular-templatecache": "^1.4.2",
+    "gulp-concat": "^2.4.1",
+    "gulp-less": "^1.3.6",
+    "gulp-livereload": "^2.1.1",
+    "gulp-notify": "^2.0.0",
+    "gulp-sourcemaps": "^1.2.7",
+    "gulp-uglify": "^1.0.1",
+    "gulp-watch": "^1.1.0",
+    "http-proxy": "^1.6.1",
+    "ws": "^0.4.32"
+  }
+}
